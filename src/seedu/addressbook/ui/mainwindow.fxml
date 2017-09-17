@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -47,6 +49,13 @@
 
         <TextArea fx:id="outputConsole" editable="false" stylesheets="@DarkTheme.css" wrapText="true" VBox.vgrow="ALWAYS">
         </TextArea>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="menu-bar" stylesheets="@DarkTheme.css">
+        <buttons>
+          <Button mnemonicParsing="false" text="Add.." />
+            <Button mnemonicParsing="false" text="Delete" />
+            <Button mnemonicParsing="false" text="List" />
+        </buttons>
+      </ButtonBar>
 
     </children>
 
