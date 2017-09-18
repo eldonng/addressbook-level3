@@ -5,10 +5,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.Command;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
+import seedu.addressbook.logic.Logic;
 
 public class AddCommandWindow {
 
@@ -34,6 +38,7 @@ public class AddCommandWindow {
     private Address address;
     private UniqueTagList tags;
     private boolean okClicked = false;
+    private Logic logic;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -48,8 +53,9 @@ public class AddCommandWindow {
      *
      * @param addCommandStage
      */
-    public void setAddStage(Stage addCommandStage) {
+    public void setAddStage(Stage addCommandStage, Logic logic) {
         this.addCommandStage = addCommandStage;
+        this.logic = logic;
     }
 
 
@@ -67,18 +73,24 @@ public class AddCommandWindow {
      * Called when the user clicks ok.
      */
     @FXML
-    private void handleOk() throws IllegalValueException{
-        if (isInputValid()) {
-            name = new Name(nameField.getText());
-            phone = new Phone(phoneField.getText(), false);
-            email = new Email(emailField.getText(), false);
-            address = new Address(addressField.getText(), false);
-            Tag tag = new Tag(tagsField.getText());
+    private void handleOk() throws Exception{
+        if(isInputValid()) {
+            name = new Name(nameField.getText().trim());
+            phone = new Phone(phoneField.getText().trim(), false);
+            email = new Email(emailField.getText().trim(), false);
+            address = new Address(addressField.getText().trim(), false);
+            Tag tag = new Tag(tagsField.getText().trim());
             tags = new UniqueTagList(tag);
 
             okClicked = true;
+            Person newPerson = new Person(name, phone, email, address, tags);
+            AddCommand adder = new AddCommand(newPerson);
+            logic.execute(adder);
+
+
             addCommandStage.close();
         }
+
     }
 
     /**
@@ -92,23 +104,19 @@ public class AddCommandWindow {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (nameField.getText() == null || nameField.getText().length() == 0
-                || !Name.isValidName(nameField.getText())) {
+        if (!Name.isValidName(nameField.getText().trim())) {
             errorMessage += Name.MESSAGE_NAME_CONSTRAINTS + "\n";
         }
-        if (phoneField.getText() == null || phoneField.getText().length() == 0
-                || !Phone.isValidPhone(phoneField.getText())) {
+        if (!Phone.isValidPhone(phoneField.getText().trim())) {
             errorMessage += Phone.MESSAGE_PHONE_CONSTRAINTS + "\n";
         }
-        if (emailField.getText() == null || emailField.getText().length() == 0
-                || !Email.isValidEmail(emailField.getText()))
+        if (!Email.isValidEmail(emailField.getText().trim()))
             errorMessage += Email.MESSAGE_EMAIL_CONSTRAINTS + "\n";
 
-        if (addressField.getText() == null || addressField.getText().length() == 0
-                || !Address.isValidAddress(addressField.getText())) {
+        if (!Address.isValidAddress(addressField.getText().trim())) {
             errorMessage += Address.MESSAGE_ADDRESS_CONSTRAINTS + "\n";
         }
-        if(Tag.isValidTagName(tagsField.getText())) {
+        if(!Tag.isValidTagName(tagsField.getText().trim())) {
             errorMessage += Tag.MESSAGE_TAG_CONSTRAINTS + "\n";
         }
 
@@ -128,6 +136,6 @@ public class AddCommandWindow {
             return false;
         }
     }
-    
+
 
 }

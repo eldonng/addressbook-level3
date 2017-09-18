@@ -244,7 +244,7 @@ public class MainWindow {
     }
 
     @FXML
-    private boolean handleAddButton() {
+    private String handleAddButton() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("ui/addwindow.fxml"));
@@ -262,15 +262,20 @@ public class MainWindow {
 
             // Set the person into the controller.
             AddCommandWindow controller = loader.getController();
-            controller.setAddStage(dialogStage);
+            controller.setAddStage(dialogStage, logic);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();
+            if(controller.isOkClicked()) {
+                return "Added Successfully";
+            }
+            else
+                return "Cancelled";
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            return false;
+            return "Error";
         }
 
     }
