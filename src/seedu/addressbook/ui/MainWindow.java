@@ -3,13 +3,21 @@ package seedu.addressbook.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import seedu.addressbook.Main;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +30,7 @@ public class MainWindow {
 
     private Logic logic;
     private Stoppable mainApp;
+    private Stage primaryStage;
 
     //Dimensions for Alert Information from Command Help
     private final double HELP_WIDTH_SIZE = 600;
@@ -34,8 +43,9 @@ public class MainWindow {
         this.logic = logic;
     }
 
-    public void setMainApp(Stoppable mainApp){
+    public void setMainApp(Stoppable mainApp, Stage primaryStage){
         this.mainApp = mainApp;
+        this.primaryStage = primaryStage;
     }
 
     @FXML
@@ -43,7 +53,6 @@ public class MainWindow {
 
     @FXML
     private TextField commandInput;
-
 
     @FXML
     void onCommand(ActionEvent event) {
@@ -226,5 +235,45 @@ public class MainWindow {
 
         alert.showAndWait();
     }
+
+    @FXML
+    private void handleListButton() throws Exception {
+        CommandResult result = logic.execute("list");
+        displayResult(result);
+
+    }
+
+    @FXML
+    private boolean handleAddButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("ui/addwindow.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Person");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            dialogStage.getIcons().add(new Image("file:resources/images/AddressApp_Logo.png"));
+
+
+            // Set the person into the controller.
+            AddCommandWindow controller = loader.getController();
+            controller.setAddStage(dialogStage);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+
+    }
+
 
 }

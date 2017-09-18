@@ -47,8 +47,9 @@ public class Gui {
         stage.show();
         MainWindow mainWindow = loader.getController();
         mainWindow.setLogic(logic);
-        mainWindow.setMainApp(mainApp);
+        mainWindow.setMainApp(mainApp, stage);
         return mainWindow;
     }
+
 
 }

@@ -52,6 +52,8 @@ public class AddCommandWindow {
         this.addCommandStage = addCommandStage;
     }
 
+
+
     /**
      * Returns true if the user clicked OK, false otherwise.
      *
@@ -126,6 +128,6 @@ public class AddCommandWindow {
             return false;
         }
     }
-
+    
 
 }
