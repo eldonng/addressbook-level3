@@ -44,12 +44,12 @@
         </menus>
       </MenuBar>
 
-        <TextField fx:id="commandInput" onAction="#onCommand" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER">
+        <TextField fx:id="commandInput" onAction="#onCommand" styleClass="text-area2" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER">
         </TextField>
 
         <TextArea fx:id="outputConsole" editable="false" stylesheets="@DarkTheme.css" wrapText="true" VBox.vgrow="ALWAYS">
         </TextArea>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="menu-bar" stylesheets="@DarkTheme.css">
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="text-area2" stylesheets="@DarkTheme.css">
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleAddButton" text="Add.." />
             <Button mnemonicParsing="false" onAction="#handleDelete" text="Delete" />

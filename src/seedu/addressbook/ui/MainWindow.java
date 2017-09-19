@@ -251,7 +251,9 @@ public class MainWindow {
     @FXML
     private void handleAddButton() throws IOException {
         AddCommandWindow controller = gui.startAddWindow(primaryStage);
-        displayResult(controller.getCommandResult());
+        if(controller.getCommandResult() != null) {
+            displayResult(controller.getCommandResult());
+        }
     }
 
 

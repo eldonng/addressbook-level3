@@ -16,8 +16,16 @@
     -fx-padding: 5 5 5 5;
 }
 
+.text-area2 {
+    -fx-background-color: derive(#000000, 20%);
+    -fx-control-inner-background: black;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 10pt;
+    -fx-padding: 5 5 5 5;
+}
+
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d,20%);
+    -fx-background-color: derive(#555555,20%);
 }
 
 .context-menu {
