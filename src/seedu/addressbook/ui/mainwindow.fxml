@@ -52,7 +52,7 @@
       <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="menu-bar" stylesheets="@DarkTheme.css">
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleAddButton" text="Add.." />
-            <Button mnemonicParsing="false" text="Delete" />
+            <Button mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
             <Button mnemonicParsing="false" onAction="#handleListButton" text="List" />
         </buttons>
       </ButtonBar>
