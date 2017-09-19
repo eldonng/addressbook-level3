@@ -39,6 +39,7 @@ public class AddCommandWindow {
     private UniqueTagList tags;
     private boolean okClicked = false;
     private Logic logic;
+    private CommandResult result;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -69,6 +70,11 @@ public class AddCommandWindow {
         return okClicked;
     }
 
+    public CommandResult getCommandResult() {
+        return result;
+    }
+
+
     /**
      * Called when the user clicks ok.
      */
@@ -79,20 +85,29 @@ public class AddCommandWindow {
             phone = new Phone(phoneField.getText().trim(), false);
             email = new Email(emailField.getText().trim(), false);
             address = new Address(addressField.getText().trim(), false);
-            tags = new UniqueTagList((tagsField.getText().trim()));
+
+            //Get tags as per normal if tagsField has text in it
+            if(tagsField.getText().trim().length() != 0) {
+                tags = new UniqueTagList((tagsField.getText().trim()));
+            }
+            else //Otherwise, if tagsField is empty return empty list
+                tags = new UniqueTagList();
 
             okClicked = true;
             Person newPerson = new Person(name, phone, email, address, tags);
             AddCommand adder = new AddCommand(newPerson);
-            logic.execute(adder);
+            CommandResult result = logic.execute(adder);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.getDialogPane().setMinSize(200,175);
+            alert.getDialogPane().setMinSize(200, 175);
             alert.setTitle("AddressBook Add Command");
             alert.setHeaderText("Add Successful");
             alert.setContentText("Person added successfully");
 
             alert.showAndWait();
+
+            //Stores the CommandResult in Gui for MainWindow to retrieve
+            this.result = result;
 
             addCommandStage.close();
         }
@@ -122,7 +137,8 @@ public class AddCommandWindow {
         if (!Address.isValidAddress(addressField.getText().trim())) {
             errorMessage += Address.MESSAGE_ADDRESS_CONSTRAINTS + "\n";
         }
-        if(!Tag.isValidTags(tagsField.getText().trim())) {
+        //Check whether tagsField is valid if there is text inside
+        if(tagsField.getText().trim().length() != 0 && !Tag.isValidTags(tagsField.getText().trim())) {
             errorMessage += Tag.MESSAGE_TAG_CONSTRAINTS + "\n";
         }
 

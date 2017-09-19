@@ -31,6 +31,7 @@ public class MainWindow {
     private Logic logic;
     private Stoppable mainApp;
     private Stage primaryStage;
+    private Gui gui;
 
     //Dimensions for Alert Information from Command Help
     private final double HELP_WIDTH_SIZE = 600;
@@ -69,6 +70,10 @@ public class MainWindow {
             display(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public void setGui(Gui gui) {
+        this.gui = gui;
     }
 
     private void exitApp() throws Exception {
@@ -235,7 +240,7 @@ public class MainWindow {
 
         alert.showAndWait();
     }
-
+;
     @FXML
     private void handleListButton() throws Exception {
         CommandResult result = logic.execute("list");
@@ -244,41 +249,11 @@ public class MainWindow {
     }
 
     @FXML
-    private String handleAddButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("ui/addwindow.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Add Person");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-            dialogStage.getIcons().add(new Image("file:resources/images/AddressApp_Logo.png"));
-
-
-            // Set the person into the controller.
-            AddCommandWindow controller = loader.getController();
-            controller.setAddStage(dialogStage, logic);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-
-            if(controller.isOkClicked()) {
-                return "Added Successfully";
-            }
-            else
-                return "Cancelled";
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            return "Error";
-        }
-
+    private void handleAddButton() throws IOException {
+        AddCommandWindow controller = gui.startAddWindow(primaryStage);
+        displayResult(controller.getCommandResult());
     }
+
 
     @FXML
     private void handleDelete() throws Exception {

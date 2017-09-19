@@ -2,6 +2,9 @@ package seedu.addressbook.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
@@ -48,8 +51,36 @@ public class Gui {
         MainWindow mainWindow = loader.getController();
         mainWindow.setLogic(logic);
         mainWindow.setMainApp(mainApp, stage);
+        mainWindow.setGui(this);
         return mainWindow;
     }
 
+    private AddCommandWindow createAddWindow(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("ui/addwindow.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
+
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Add Person");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(stage);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+        dialogStage.getIcons().add(new Image("file:resources/images/AddressApp_Logo.png"));
+
+        // Set the person into the controller.
+        AddCommandWindow controller = loader.getController();
+        controller.setAddStage(dialogStage, logic);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        return controller;
+    }
+
+    public AddCommandWindow startAddWindow(Stage stage) throws IOException{
+        return createAddWindow(stage);
+    }
 
 }
