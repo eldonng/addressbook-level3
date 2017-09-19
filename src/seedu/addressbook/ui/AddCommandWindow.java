@@ -98,18 +98,41 @@ public class AddCommandWindow {
             AddCommand adder = new AddCommand(newPerson);
             CommandResult result = logic.execute(adder);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.getDialogPane().setMinSize(200, 175);
-            alert.setTitle("AddressBook Add Command");
-            alert.setHeaderText("Add Successful");
-            alert.setContentText("Person added successfully");
+            if(result.feedbackToUser.equals(AddCommand.MESSAGE_DUPLICATE_PERSON)) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.getDialogPane().setMinSize(200, 175);
+                alert.setTitle("AddressBook Add Command");
+                alert.setHeaderText("Add Unsuccessful");
+                alert.setContentText(result.feedbackToUser);
+                alert.showAndWait();
 
-            alert.showAndWait();
+            }
+
+            else if(result.feedbackToUser.equals(String.format(AddCommand.MESSAGE_SUCCESS, newPerson))) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.getDialogPane().setMinSize(200, 175);
+                alert.setTitle("AddressBook Add Command");
+                alert.setHeaderText("Add Successful");
+                alert.setContentText("Person added successfully");
+
+                alert.showAndWait();
+                addCommandStage.close();
+
+            }
+
+            else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.getDialogPane().setMinSize(200, 175);
+                alert.setTitle("AddressBook Add Command");
+                alert.setHeaderText("Error");
+                alert.setContentText("An unexpected error has occurred. Please try again.");
+
+                alert.showAndWait();
+            }
 
             //Stores the CommandResult in Gui for MainWindow to retrieve
             this.result = result;
 
-            addCommandStage.close();
         }
 
     }
