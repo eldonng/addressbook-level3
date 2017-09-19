@@ -87,6 +87,13 @@ public class AddCommandWindow {
             AddCommand adder = new AddCommand(newPerson);
             logic.execute(adder);
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.getDialogPane().setMinSize(200,175);
+            alert.setTitle("AddressBook Add Command");
+            alert.setHeaderText("Add Successful");
+            alert.setContentText("Person added successfully");
+
+            alert.showAndWait();
 
             addCommandStage.close();
         }
