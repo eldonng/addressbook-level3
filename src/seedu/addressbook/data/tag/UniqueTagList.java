@@ -2,6 +2,7 @@ package seedu.addressbook.data.tag;
 
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
+import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.*;
 
@@ -34,6 +35,22 @@ public class UniqueTagList implements Iterable<Tag> {
      * Constructs an empty TagList.
      */
     public UniqueTagList() {}
+
+    /**
+     * Constructs a tag list with String input tags
+     */
+
+    public UniqueTagList(String inputTags) throws DuplicateTagException, IllegalValueException {
+        String[] tagList = inputTags.split(",");
+        List<Tag> listOfTags = new ArrayList<>();
+        for(String tag: tagList) {
+            listOfTags.add(new Tag(tag.trim()));
+        }
+        if (!Utils.elementsAreUnique(listOfTags)) {
+            throw new DuplicateTagException();
+        }
+        internalList.addAll(listOfTags);
+    }
 
     /**
      * Constructs a tag list with the given tags.
@@ -69,6 +86,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public UniqueTagList(UniqueTagList source) {
         internalList.addAll(source.internalList);
     }
+
 
     /**
      * All tags in this list as a Set. This set is mutable and change-insulated against the internal list.

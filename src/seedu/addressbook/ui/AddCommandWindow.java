@@ -79,8 +79,7 @@ public class AddCommandWindow {
             phone = new Phone(phoneField.getText().trim(), false);
             email = new Email(emailField.getText().trim(), false);
             address = new Address(addressField.getText().trim(), false);
-            Tag tag = new Tag(tagsField.getText().trim());
-            tags = new UniqueTagList(tag);
+            tags = new UniqueTagList((tagsField.getText().trim()));
 
             okClicked = true;
             Person newPerson = new Person(name, phone, email, address, tags);
@@ -123,7 +122,7 @@ public class AddCommandWindow {
         if (!Address.isValidAddress(addressField.getText().trim())) {
             errorMessage += Address.MESSAGE_ADDRESS_CONSTRAINTS + "\n";
         }
-        if(!Tag.isValidTagName(tagsField.getText().trim())) {
+        if(!Tag.isValidTags(tagsField.getText().trim())) {
             errorMessage += Tag.MESSAGE_TAG_CONSTRAINTS + "\n";
         }
 

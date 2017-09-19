@@ -40,6 +40,16 @@ public class Tag {
                 && this.tagName.equals(((Tag) other).tagName)); // state check
     }
 
+    public static boolean isValidTags(String inputTags) {
+        String[] tagList = inputTags.split(",");
+        for(String tag: tagList) {
+            if(!isValidTagName(tag.trim())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public int hashCode() {
         return tagName.hashCode();
