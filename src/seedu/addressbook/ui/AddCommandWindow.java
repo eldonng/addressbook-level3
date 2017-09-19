@@ -3,6 +3,7 @@ package seedu.addressbook.ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import seedu.addressbook.commands.AddCommand;
@@ -30,6 +31,15 @@ public class AddCommandWindow {
 
     @FXML
     private TextField tagsField;
+
+    @FXML
+    private CheckBox privatePhone;
+
+    @FXML
+    private CheckBox privateEmail;
+
+    @FXML
+    private CheckBox privateAddress;
 
     private Stage addCommandStage;
     private Name name;
@@ -82,9 +92,9 @@ public class AddCommandWindow {
     private void handleOk() throws Exception{
         if(isInputValid()) {
             name = new Name(nameField.getText().trim());
-            phone = new Phone(phoneField.getText().trim(), false);
-            email = new Email(emailField.getText().trim(), false);
-            address = new Address(addressField.getText().trim(), false);
+            phone = new Phone(phoneField.getText().trim(), privatePhone.isSelected());
+            email = new Email(emailField.getText().trim(), privateEmail.isSelected());
+            address = new Address(addressField.getText().trim(), privateAddress.isSelected());
 
             //Get tags as per normal if tagsField has text in it
             if(tagsField.getText().trim().length() != 0) {

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,12 +10,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="275.0" prefWidth="500.0" styleClass="text-area" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.addressbook.ui.AddCommandWindow">
+<AnchorPane prefHeight="275.0" prefWidth="600.0" styleClass="text-area" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.addressbook.ui.AddCommandWindow">
    <children>
-      <GridPane layoutX="53.0" layoutY="29.0" prefHeight="150.0" prefWidth="395.0" styleClass="text-field" stylesheets="@DarkTheme.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="80.0">
+      <GridPane layoutX="53.0" layoutY="29.0" prefHeight="150.0" prefWidth="395.0" styleClass="text-field" stylesheets="@DarkTheme.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="80.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="132.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="294.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="143.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="435.0" minWidth="10.0" prefWidth="383.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -24,11 +25,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="text-field" text="Name" />
-            <Label styleClass="text-field" text="Phone" GridPane.rowIndex="1" />
-            <Label styleClass="text-field" text="Email" GridPane.rowIndex="2" />
-            <Label styleClass="text-field" text="Address" GridPane.rowIndex="3" />
-            <Label styleClass="text-field" text="Tags (if any)" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" styleClass="text-field" text="Name" />
+            <Label alignment="CENTER" styleClass="text-field" text="Phone" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" styleClass="text-field" text="Email" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" styleClass="text-field" text="Address" GridPane.rowIndex="3" />
+            <Label alignment="CENTER" styleClass="text-field" text="Tags (if any)" GridPane.rowIndex="4" />
             <TextField fx:id="nameField" GridPane.columnIndex="1" />
             <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -43,5 +44,9 @@
         </buttons>
       </ButtonBar>
       <Label layoutX="57.0" layoutY="43.0" styleClass="header" stylesheets="@DarkTheme.css" text="Add A Person" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <Label alignment="CENTER" layoutX="580.0" layoutY="52.0" prefHeight="18.0" prefWidth="91.0" styleClass="text-field" text="Private" textAlignment="CENTER" />
+      <CheckBox fx:id="privatePhone" layoutX="608.0" layoutY="116.0" mnemonicParsing="false" styleClass="label" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="114.0" />
+      <CheckBox fx:id="privateEmail" layoutX="608.0" layoutY="150.0" mnemonicParsing="false" prefWidth="25.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="144.0" />
+      <CheckBox fx:id="privateAddress" layoutX="608.0" layoutY="178.0" mnemonicParsing="false" prefWidth="25.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="174.0" />
    </children>
 </AnchorPane>
