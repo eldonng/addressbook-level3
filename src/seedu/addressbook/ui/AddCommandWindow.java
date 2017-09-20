@@ -90,59 +90,63 @@ public class AddCommandWindow {
      */
     @FXML
     private void handleOk() throws Exception{
-        if(isInputValid()) {
-            name = new Name(nameField.getText().trim());
-            phone = new Phone(phoneField.getText().trim(), privatePhone.isSelected());
-            email = new Email(emailField.getText().trim(), privateEmail.isSelected());
-            address = new Address(addressField.getText().trim(), privateAddress.isSelected());
+        try {
+            if(isInputValid()) {
+                name = new Name(nameField.getText().trim());
+                phone = new Phone(phoneField.getText().trim(), privatePhone.isSelected());
+                email = new Email(emailField.getText().trim(), privateEmail.isSelected());
+                address = new Address(addressField.getText().trim(), privateAddress.isSelected());
 
-            //Get tags as per normal if tagsField has text in it
-            if(tagsField.getText().trim().length() != 0) {
-                tags = new UniqueTagList((tagsField.getText().trim()));
+                //Get tags as per normal if tagsField has text in it
+                if(tagsField.getText().trim().length() != 0) {
+                    tags = new UniqueTagList((tagsField.getText().trim()));
+                } else //Otherwise, if tagsField is empty return empty list
+                    tags = new UniqueTagList();
+
+                okClicked = true;
+                Person newPerson = new Person(name, phone, email, address, tags);
+                AddCommand adder = new AddCommand(newPerson);
+                CommandResult result = logic.execute(adder);
+
+                if(result.feedbackToUser.equals(AddCommand.MESSAGE_DUPLICATE_PERSON)) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.getDialogPane().setMinSize(200, 175);
+                    alert.setTitle("AddressBook Add Command");
+                    alert.setHeaderText("Add Unsuccessful");
+                    alert.setContentText(result.feedbackToUser);
+                    alert.showAndWait();
+
+                } else if(result.feedbackToUser.equals(String.format(AddCommand.MESSAGE_SUCCESS, newPerson))) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.getDialogPane().setMinSize(200, 175);
+                    alert.setTitle("AddressBook Add Command");
+                    alert.setHeaderText("Add Successful");
+                    alert.setContentText("Person added successfully");
+
+                    alert.showAndWait();
+                    addCommandStage.close();
+
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.getDialogPane().setMinSize(200, 175);
+                    alert.setTitle("AddressBook Add Command");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("An unexpected error has occurred. Please try again.");
+
+                    alert.showAndWait();
+                }
+
+                //Stores the CommandResult in Gui for MainWindow to retrieve
+                this.result = result;
             }
-            else //Otherwise, if tagsField is empty return empty list
-                tags = new UniqueTagList();
+        } catch (UniqueTagList.DuplicateTagException dte) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.getDialogPane().setMinSize(200, 175);
+            alert.setTitle("AddressBook Add Command");
+            alert.setHeaderText("Error");
+            alert.setContentText("Duplicate Tags found. Remove Duplicate Tags and try again.");
 
-            okClicked = true;
-            Person newPerson = new Person(name, phone, email, address, tags);
-            AddCommand adder = new AddCommand(newPerson);
-            CommandResult result = logic.execute(adder);
-
-            if(result.feedbackToUser.equals(AddCommand.MESSAGE_DUPLICATE_PERSON)) {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.getDialogPane().setMinSize(200, 175);
-                alert.setTitle("AddressBook Add Command");
-                alert.setHeaderText("Add Unsuccessful");
-                alert.setContentText(result.feedbackToUser);
-                alert.showAndWait();
-
-            }
-
-            else if(result.feedbackToUser.equals(String.format(AddCommand.MESSAGE_SUCCESS, newPerson))) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.getDialogPane().setMinSize(200, 175);
-                alert.setTitle("AddressBook Add Command");
-                alert.setHeaderText("Add Successful");
-                alert.setContentText("Person added successfully");
-
-                alert.showAndWait();
-                addCommandStage.close();
-
-            }
-
-            else {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.getDialogPane().setMinSize(200, 175);
-                alert.setTitle("AddressBook Add Command");
-                alert.setHeaderText("Error");
-                alert.setContentText("An unexpected error has occurred. Please try again.");
-
-                alert.showAndWait();
-            }
-
-            //Stores the CommandResult in Gui for MainWindow to retrieve
-            this.result = result;
-
+            alert.showAndWait();
         }
 
     }

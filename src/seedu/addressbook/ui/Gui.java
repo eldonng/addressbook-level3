@@ -44,7 +44,7 @@ public class Gui {
          * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
          */
         loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
-
+        stage.getIcons().add(new Image("file:doc/images/AddressApp_Logo.png"));
         stage.setTitle(version);
         stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
         stage.show();
@@ -67,7 +67,7 @@ public class Gui {
         dialogStage.initOwner(stage);
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
-        dialogStage.getIcons().add(new Image("file:resources/images/AddressApp_Logo.png"));
+        dialogStage.getIcons().add(new Image("file:doc/images/AddressApp_Logo.png"));
 
         // Set the person into the controller.
         AddCommandWindow controller = loader.getController();

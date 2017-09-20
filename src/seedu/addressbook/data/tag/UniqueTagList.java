@@ -40,7 +40,7 @@ public class UniqueTagList implements Iterable<Tag> {
      * Constructs a tag list with String input tags
      */
 
-    public UniqueTagList(String inputTags) throws DuplicateTagException, IllegalValueException {
+    public UniqueTagList(String inputTags) throws IllegalValueException {
         String[] tagList = inputTags.split(",");
         List<Tag> listOfTags = new ArrayList<>();
         for(String tag: tagList) {
