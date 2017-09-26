@@ -17,7 +17,8 @@
 }
 
 .text-area2 {
-    -fx-background-color: derive(#000000, 20%);
+    -fx-background-color: derive(#999999, 20%);
+    -fx-border-color: #000000;
     -fx-control-inner-background: black;
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 10pt;
